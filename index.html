@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript">
+    const webIntegrationId = "qHgz8WW5yc8nUvRV93s_s3Qw6TyaKSVK";
+    function login() {
+      function isLoggedIn() {
+        return fetch("https://mii.sg.qlikcloud.com/api/v1/users/me", {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'qlik-web-integration-id': webIntegrationId,
+          },
+        }).then(response => {
+          return response.status === 200;
+        });
+      }
+      return isLoggedIn().then(loggedIn => {
+        if (!loggedIn) {
+          // check login
+            window.top.location.href = "https://mii.sg.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
+          throw new Error('not logged in');
+        }
+      });
+    }
+	login()
+  </script>
+</head>
+
+<body style="height:600px;">
+	<iframe src="https://mii.sg.qlikcloud.com/single/?appid=cbe5f0fd-1de2-463f-9772-976ae8877c76&obj=LuLEnP&theme=horizon&opt=ctxmenu,currsel" style="border:none;width:100%;height:100%;"></iframe>
+</body>
+
+</html>
